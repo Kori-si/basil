@@ -1,4 +1,4 @@
-import {  } from "../img/";
+import logo from "../assets/img/pizza-logo.svg";
 
 
 export const Header = () => {
@@ -6,7 +6,7 @@ export const Header = () => {
     <div className="header">
       <div className="container">
         <div className="header__logo">
-          <img width="38" src="" alt="Pizza logo" />
+          <img width="38" src={logo} alt="Pizza logo" />
           <div>
             <h1>React Pizza</h1>
             <p>самая вкусная пицца во вселенной</p>
