@@ -5,8 +5,11 @@ import { Categories } from "./componets/Categories";
 import { Sort } from "./componets/Sort";
 import { ProductCard } from "./componets/ProductCard";
 
+import pizzas from "./assets/pizzas.json";
+
 import "./scss/app.scss";
 
+console.log(pizzas);
 
 function App() {
   return (
@@ -20,10 +23,15 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            <ProductCard title="мексиканская" price={500} />
-            <ProductCard />
-
-
+            {pizzas?.pizzas.map((obj) => (
+              <ProductCard {...obj} 
+                // title={obj.title}
+                // price={obj.price}
+                // imageUrl={obj.imageUrl}
+                // sizes={obj.sizes}
+                // types={obj.types}
+              />
+            ))}
           </div>
         </div>
       </div>
