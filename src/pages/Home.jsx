@@ -3,28 +3,26 @@ import React from "react";
 import { Categories } from "../componets/Categories";
 import { Sort } from "../componets/Sort";
 import { ProductCard } from "../componets/Block/ProductCard";
+import { Pagination } from "../componets/Pagination";
 import Skeleton from "../componets/Block/Skeleton";
+import { SearchContext } from "../App";
 
-import axios from "axios";
-
-export const Home = ({ searchValue }) => {
+export const Home = () => {
+  const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [categoryId, setCategoryId] = React.useState(0);
+  const [currentPage, setCurrentPage] = React.useState(1);
   const [sortType, setSortType] = React.useState({
     name: "популярности asc",
     sortProperty: "rating",
     order: "asc",
   });
 
-  //  `http://localhost:5000/pizzas?${
-  //       categoryId > 0? `category=${categoryId}` : ""
-  //     }_sort=${sortType.sortProperty}`
-
   React.useEffect(() => {
     setIsLoading(true);
     fetch(
-      `http://localhost:5000/pizzas?${
+      `http://localhost:5000/pizzas?_page=${currentPage}&_limit=4&${
         categoryId > 0 ? "category=" + categoryId : ""
       }&_sort=${sortType.sortProperty}&_order=${sortType.order}`
     )
@@ -36,7 +34,7 @@ export const Home = ({ searchValue }) => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortType]);
+  }, [categoryId, sortType, searchValue, currentPage]);
 
   const pizzas = items
     .filter((obj) => {
@@ -62,6 +60,7 @@ export const Home = ({ searchValue }) => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      <Pagination onChangePage={(number) => setCurrentPage(number)} />
     </div>
   );
 };
