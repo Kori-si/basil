@@ -14,6 +14,7 @@ export const list = [
 export const Sort = () => {
   const dispatch = useDispatch();
   const sort = useSelector((state) => state.filter.sort);
+  const sortRef = React.useRef();
 
   const [open, setOpen] = React.useState(false);
 
@@ -22,8 +23,19 @@ export const Sort = () => {
     setOpen(false);
   };
 
+  React.useEffect(() => {
+    const handleClockOutside = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+    document.body.addEventListener("click", handleClockOutside);
+
+    return () => document.body.removeEventListener("click", handleClockOutside);
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"
