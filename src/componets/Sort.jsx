@@ -1,19 +1,21 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSort } from "../redux/slices/filterSlice";
+import { selectSort, setSort } from "../redux/slices/filterSlice";
 
 export const list = [
-  { id: 1, name: "популярности asc", sortProperty: "rating", order: "asc" },
-  { id: 2, name: "популярности desc", sortProperty: "rating", order: "desc" },
-  { id: 3, name: "цене asc", sortProperty: "price", order: "asc" },
-  { id: 4, name: "цене desc", sortProperty: "price", order: "desc" },
-  { id: 5, name: "алфавиту asc", sortProperty: "title", order: "asc" },
-  { id: 6, name: "алфавиту desc", sortProperty: "title", order: "desc" },
+  // { id: 1, name: "популярности asc", sortProperty: "rating", order: "asc" },
+  // { id: 2, name: "популярности desc", sortProperty: "rating", order: "desc" },
+  { id: 1, name: "популярности asc", sortProperty: "rating"},
+  { id: 2, name: "популярности desc", sortProperty: "-rating"},
+  { id: 3, name: "цене asc", sortProperty: "price"},
+  { id: 4, name: "цене desc", sortProperty: "-price"},
+  { id: 5, name: "алфавиту asc", sortProperty: "title"},
+  { id: 6, name: "алфавиту desc", sortProperty: "-title"},
 ];
 
 export const Sort = () => {
   const dispatch = useDispatch();
-  const sort = useSelector((state) => state.filter.sort);
+  const sort = useSelector(selectSort);
   const sortRef = React.useRef();
 
   const [open, setOpen] = React.useState(false);

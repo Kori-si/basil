@@ -12,11 +12,13 @@ import { Pagination } from "../componets/Pagination";
 import Skeleton from "../componets/Block/Skeleton";
 import { SearchContext } from "../App";
 import {
+  selectSort,
   setCategoryId,
   setCurrentPage,
   setFilters,
+  setSearchValue,
 } from "../redux/slices/filterSlice";
-import { fetchPizzas } from "../redux/slices/pizzaSlice";
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
 
 export const Home = () => {
   const dispatch = useDispatch();
@@ -25,11 +27,11 @@ export const Home = () => {
   const isMounted = React.useRef(false);
 
   const categoryId = useSelector((state) => state.filter.categoryId);
-  const sortType = useSelector((state) => state.filter.sort);
+  const sortType = useSelector(selectSort);
   const currentPage = useSelector((state) => state.filter.currentPage);
-  const { items, status } = useSelector((state) => state.pizza);
+  const searchValue = useSelector((state) => state.filter.searchValue);
+  const { items, status } = useSelector(selectPizzaData);
 
-  const { searchValue } = React.useContext(SearchContext);
 
   const onClickCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -113,7 +115,10 @@ export const Home = () => {
       {status === "error" ? (
         <div className="content__error-info">
           <h2>Произошла ошибка 😕</h2>
-          <p>К сожалению, не удалось получить пиццы. Попробуйте повторить попытку позже</p>
+          <p>
+            К сожалению, не удалось получить пиццы. Попробуйте повторить попытку
+            позже
+          </p>
         </div>
       ) : (
         <div className="content__items">
